@@ -1,0 +1,1651 @@
+{
+	"info": {
+		"_postman_id": "fleet-flow-api-collection",
+		"name": "Fleet Flow API",
+		"description": "Complete API collection for Fleet Flow — Fleet Management System.\n\nAll users share password: Password@123\n\nLogin with any role to get JWT, then use Bearer token for authenticated endpoints.\n\n## RBAC Roles\n- FLEET_MANAGER: Vehicles (CRUD), Maintenance (CRUD), Dashboard, Analytics (read)\n- DISPATCHER: Trips (CRUD), Dashboard\n- SAFETY_OFFICER: Drivers (CRUD), Dashboard\n- FINANCIAL_ANALYST: Expenses, Fuel Logs, Analytics (write+read), Dashboard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "fm_user_id",
+			"value": "11111111-1111-1111-1111-111111111101",
+			"type": "string"
+		},
+		{
+			"key": "dp_user_id",
+			"value": "22222222-2222-2222-2222-222222222201",
+			"type": "string"
+		},
+		{
+			"key": "so_user_id",
+			"value": "33333333-3333-3333-3333-333333333301",
+			"type": "string"
+		},
+		{
+			"key": "fa_user_id",
+			"value": "44444444-4444-4444-4444-444444444401",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_1_id",
+			"value": "55555555-5555-5555-5555-555555555501",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_2_id",
+			"value": "55555555-5555-5555-5555-555555555502",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_3_id",
+			"value": "55555555-5555-5555-5555-555555555503",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_4_id",
+			"value": "55555555-5555-5555-5555-555555555504",
+			"type": "string"
+		},
+		{
+			"key": "vehicle_5_id",
+			"value": "55555555-5555-5555-5555-555555555505",
+			"type": "string"
+		},
+		{
+			"key": "driver_1_id",
+			"value": "66666666-6666-6666-6666-666666666601",
+			"type": "string"
+		},
+		{
+			"key": "driver_2_id",
+			"value": "66666666-6666-6666-6666-666666666602",
+			"type": "string"
+		},
+		{
+			"key": "driver_3_id",
+			"value": "66666666-6666-6666-6666-666666666603",
+			"type": "string"
+		},
+		{
+			"key": "driver_4_id",
+			"value": "66666666-6666-6666-6666-666666666604",
+			"type": "string"
+		},
+		{
+			"key": "driver_5_id",
+			"value": "66666666-6666-6666-6666-666666666605",
+			"type": "string"
+		},
+		{
+			"key": "driver_6_id",
+			"value": "66666666-6666-6666-6666-666666666606",
+			"type": "string"
+		},
+		{
+			"key": "trip_1_id",
+			"value": "77777777-7777-7777-7777-777777777701",
+			"type": "string"
+		},
+		{
+			"key": "trip_2_id",
+			"value": "77777777-7777-7777-7777-777777777702",
+			"type": "string"
+		},
+		{
+			"key": "trip_3_id",
+			"value": "77777777-7777-7777-7777-777777777703",
+			"type": "string"
+		},
+		{
+			"key": "trip_4_id",
+			"value": "77777777-7777-7777-7777-777777777704",
+			"type": "string"
+		},
+		{
+			"key": "trip_7_id",
+			"value": "77777777-7777-7777-7777-777777777707",
+			"type": "string"
+		},
+		{
+			"key": "maintenance_1_id",
+			"value": "88888888-8888-8888-8888-888888888801",
+			"type": "string"
+		},
+		{
+			"key": "maintenance_2_id",
+			"value": "88888888-8888-8888-8888-888888888802",
+			"type": "string"
+		},
+		{
+			"key": "maintenance_3_id",
+			"value": "88888888-8888-8888-8888-888888888803",
+			"type": "string"
+		},
+		{
+			"key": "expense_1_id",
+			"value": "99999999-9999-9999-9999-999999999901",
+			"type": "string"
+		},
+		{
+			"key": "expense_3_id",
+			"value": "99999999-9999-9999-9999-999999999903",
+			"type": "string"
+		},
+		{
+			"key": "fuel_log_1_id",
+			"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa001",
+			"type": "string"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"description": "Authentication endpoints — no JWT required",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "health"]
+						}
+					}
+				},
+				{
+					"name": "Signup — New User",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test User\",\n  \"role\": \"FLEET_MANAGER\",\n  \"employeeId\": \"EMP-TEST-001\",\n  \"phone\": \"+919999999999\",\n  \"email\": \"test.user@fleetflow.com\",\n  \"password\": \"Password@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/signup",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "signup"]
+						}
+					}
+				},
+				{
+					"name": "Login — Fleet Manager (Rajesh)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.token) {",
+									"    pm.collectionVariables.set('jwt_token', jsonData.token);",
+									"    console.log('JWT token saved successfully');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"rajesh.kumar@fleetflow.com\",\n  \"password\": \"Password@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login — Dispatcher (Amit)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.token) {",
+									"    pm.collectionVariables.set('jwt_token', jsonData.token);",
+									"    console.log('JWT token saved (Dispatcher)');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"amit.patel@fleetflow.com\",\n  \"password\": \"Password@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login — Safety Officer (Vikram)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.token) {",
+									"    pm.collectionVariables.set('jwt_token', jsonData.token);",
+									"    console.log('JWT token saved (Safety Officer)');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"vikram.singh@fleetflow.com\",\n  \"password\": \"Password@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login — Financial Analyst (Karan)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.token) {",
+									"    pm.collectionVariables.set('jwt_token', jsonData.token);",
+									"    console.log('JWT token saved (Financial Analyst)');",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"karan.mehta@fleetflow.com\",\n  \"password\": \"Password@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Verify Email Token",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify?token=PASTE_TOKEN_FROM_EMAIL_HERE",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "verify"],
+							"query": [
+								{ "key": "token", "value": "PASTE_TOKEN_FROM_EMAIL_HERE" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"rajesh.kumar@fleetflow.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/forgot-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "forgot-password"]
+						}
+					}
+				},
+				{
+					"name": "Validate Reset Token",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/validate-reset-token?token=PASTE_RESET_TOKEN_HERE",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "validate-reset-token"],
+							"query": [
+								{ "key": "token", "value": "PASTE_RESET_TOKEN_HERE" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"token\": \"PASTE_RESET_TOKEN_HERE\",\n  \"newPassword\": \"NewPassword@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "reset-password"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User Profile",
+			"description": "User profile management — any authenticated user",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "me"]
+						}
+					}
+				},
+				{
+					"name": "Update My Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rajesh Kumar Updated\",\n  \"phone\": \"+919876540001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/update-profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "update-profile"]
+						}
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"Password@123\",\n  \"newPassword\": \"NewPassword@123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/change-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "change-password"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"description": "Vehicle management — Write: FLEET_MANAGER | Read: FLEET_MANAGER, DISPATCHER, SAFETY_OFFICER",
+			"item": [
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"licensePlate\": \"MH-01-ZZ-9999\",\n  \"name\": \"Tata 407 Gold\",\n  \"model\": \"407 Gold SFC\",\n  \"type\": \"TRUCK\",\n  \"maxLoadCapacity\": 4000.0,\n  \"odometer\": 0.0,\n  \"acquisitionCost\": 1200000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				},
+				{
+					"name": "Get All Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				},
+				{
+					"name": "Get All Vehicles — Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles?status=AVAILABLE",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"],
+							"query": [
+								{ "key": "status", "value": "AVAILABLE" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Vehicles — Filter by Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles?type=TRUCK",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"],
+							"query": [
+								{ "key": "type", "value": "TRUCK" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Available Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "available"]
+						}
+					}
+				},
+				{
+					"name": "Get Vehicle by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicle_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicle_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Vehicle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tata Prima Updated\",\n  \"model\": \"Prima 4928.S v2\",\n  \"type\": \"TRUCK\",\n  \"maxLoadCapacity\": 11000.0,\n  \"acquisitionCost\": 3600000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicle_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicle_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Vehicle Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicle_3_id}}/status?status=IN_SHOP",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicle_3_id}}", "status"],
+							"query": [
+								{ "key": "status", "value": "IN_SHOP" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Vehicle",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles/{{vehicle_3_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles", "{{vehicle_3_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Drivers",
+			"description": "Driver management — Write: SAFETY_OFFICER | Read: SAFETY_OFFICER, FLEET_MANAGER, DISPATCHER",
+			"item": [
+				{
+					"name": "Create Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ramesh Verma\",\n  \"licenseNumber\": \"UP-2025-001234\",\n  \"licenseExpiryDate\": \"2028-12-31\",\n  \"licenseCategory\": \"HMV\",\n  \"phone\": \"+919899887766\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Get All Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Get All Drivers — Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers?status=ON_DUTY",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"],
+							"query": [
+								{ "key": "status", "value": "ON_DUTY" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Available Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/available",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "available"]
+						}
+					}
+				},
+				{
+					"name": "Get Drivers with Expired License",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/expired-license",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "expired-license"]
+						}
+					}
+				},
+				{
+					"name": "Get Driver by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driver_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driver_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Driver",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Suresh Yadav Updated\",\n  \"licenseExpiryDate\": \"2028-06-30\",\n  \"licenseCategory\": \"HMV\",\n  \"phone\": \"+919812340001\",\n  \"status\": \"ON_DUTY\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driver_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driver_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Driver Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driver_4_id}}/status?status=ON_DUTY",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driver_4_id}}", "status"],
+							"query": [
+								{ "key": "status", "value": "ON_DUTY" }
+							]
+						}
+					}
+				},
+				{
+					"name": "File Complaint Against Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driver_6_id}}/complaint",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driver_6_id}}", "complaint"]
+						}
+					}
+				},
+				{
+					"name": "Delete Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers/{{driver_4_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers", "{{driver_4_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Trips",
+			"description": "Trip management — Write: DISPATCHER | Read: DISPATCHER, FLEET_MANAGER\n\nLifecycle: DRAFT → DISPATCHED → IN_TRANSIT → COMPLETED / CANCELLED",
+			"item": [
+				{
+					"name": "Create Trip",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.collectionVariables.set('new_trip_id', jsonData.id);",
+									"    console.log('New trip ID saved: ' + jsonData.id);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicle_2_id}}\",\n  \"driverId\": \"{{driver_1_id}}\",\n  \"cargoWeight\": 2500.0,\n  \"origin\": \"Pune, Maharashtra\",\n  \"destination\": \"Nagpur, Maharashtra\",\n  \"estimatedFuelCost\": 8000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/trips",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"]
+						}
+					}
+				},
+				{
+					"name": "Get All Trips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"]
+						}
+					}
+				},
+				{
+					"name": "Get All Trips — Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips?status=COMPLETED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"],
+							"query": [
+								{ "key": "status", "value": "COMPLETED" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Trips — Filter by Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips?vehicleId={{vehicle_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"],
+							"query": [
+								{ "key": "vehicleId", "value": "{{vehicle_1_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Trips — Filter by Driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips?driverId={{driver_5_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"],
+							"query": [
+								{ "key": "driverId", "value": "{{driver_5_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Trip by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{trip_4_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{trip_4_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Dispatch Trip (DRAFT → DISPATCHED)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{trip_4_id}}/dispatch",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{trip_4_id}}", "dispatch"]
+						}
+					}
+				},
+				{
+					"name": "Start Trip (DISPATCHED → IN_TRANSIT)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{trip_4_id}}/in-transit",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{trip_4_id}}", "in-transit"]
+						}
+					}
+				},
+				{
+					"name": "Complete Trip (→ COMPLETED)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"endOdometer\": 14780.0,\n  \"revenue\": 35000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{trip_4_id}}/complete",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{trip_4_id}}", "complete"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Trip (DRAFT Trip 7)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cancellationReason\": \"Last-mile delivery cancelled by customer\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/trips/{{trip_7_id}}/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips", "{{trip_7_id}}", "cancel"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Maintenance Logs",
+			"description": "Maintenance management — Write: FLEET_MANAGER | Read: FLEET_MANAGER, SAFETY_OFFICER, FINANCIAL_ANALYST",
+			"item": [
+				{
+					"name": "Create Maintenance Log",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicle_2_id}}\",\n  \"serviceName\": \"AC Compressor Repair\",\n  \"issueDescription\": \"AC not cooling properly. Compressor needs replacement.\",\n  \"serviceDate\": \"2026-02-21\",\n  \"cost\": 15000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"]
+						}
+					}
+				},
+				{
+					"name": "Get All Maintenance Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"]
+						}
+					}
+				},
+				{
+					"name": "Get Maintenance Logs — Filter by Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance?vehicleId={{vehicle_5_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"],
+							"query": [
+								{ "key": "vehicleId", "value": "{{vehicle_5_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Maintenance Logs — Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance?status=NEW",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance"],
+							"query": [
+								{ "key": "status", "value": "NEW" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Maintenance Log by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenance_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenance_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Maintenance Log",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"serviceName\": \"Engine Overhaul — Full\",\n  \"issueDescription\": \"Complete engine rebuild including turbo replacement.\",\n  \"serviceDate\": \"2025-01-20\",\n  \"cost\": 95000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenance_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenance_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Maintenance Status (NEW → IN_PROGRESS)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"IN_PROGRESS\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenance_1_id}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenance_1_id}}", "status"]
+						}
+					}
+				},
+				{
+					"name": "Update Maintenance Status (→ RESOLVED)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"RESOLVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenance_2_id}}/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenance_2_id}}", "status"]
+						}
+					}
+				},
+				{
+					"name": "Delete Maintenance Log",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/maintenance/{{maintenance_3_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "maintenance", "{{maintenance_3_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Expenses",
+			"description": "Expense management — Write: FINANCIAL_ANALYST | Read: FINANCIAL_ANALYST, FLEET_MANAGER\n\nOnly for COMPLETED trips. One expense per trip.",
+			"item": [
+				{
+					"name": "Create Expense (for Completed Trip 3 — after completion)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tripId\": \"{{trip_3_id}}\",\n  \"distance\": 630.0,\n  \"fuelCost\": 5500.00,\n  \"miscExpense\": 1200.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"]
+						}
+					}
+				},
+				{
+					"name": "Get All Expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses — Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses?status=APPROVED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"],
+							"query": [
+								{ "key": "status", "value": "APPROVED" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses — Filter by Trip",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses?tripId={{trip_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"],
+							"query": [
+								{ "key": "tripId", "value": "{{trip_1_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses — Filter by Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses?vehicleId={{vehicle_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"],
+							"query": [
+								{ "key": "vehicleId", "value": "{{vehicle_1_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expenses — Filter by Driver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses?driverId={{driver_5_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"],
+							"query": [
+								{ "key": "driverId", "value": "{{driver_5_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Expense by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expense_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expense_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Expense",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"distance\": 1420.0,\n  \"fuelCost\": 13000.00,\n  \"miscExpense\": 3000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expense_3_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expense_3_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Expense Status (PENDING → APPROVED)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expense_3_id}}/status?status=APPROVED",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expense_3_id}}", "status"],
+							"query": [
+								{ "key": "status", "value": "APPROVED" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Expense",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expense_3_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expense_3_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Fuel Logs",
+			"description": "Fuel log management — Write: FINANCIAL_ANALYST | Read: FINANCIAL_ANALYST, FLEET_MANAGER",
+			"item": [
+				{
+					"name": "Create Fuel Log (with Trip)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicle_4_id}}\",\n  \"tripId\": \"{{trip_3_id}}\",\n  \"liters\": 35.0,\n  \"cost\": 3150.00,\n  \"odometerAtFill\": 3120.0,\n  \"fillDate\": \"2025-01-21T08:30:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs"]
+						}
+					}
+				},
+				{
+					"name": "Create Fuel Log (Standalone — No Trip)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicle_3_id}}\",\n  \"liters\": 5.0,\n  \"cost\": 550.00,\n  \"odometerAtFill\": 2300.0,\n  \"fillDate\": \"2026-02-20T14:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs"]
+						}
+					}
+				},
+				{
+					"name": "Get All Fuel Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs"]
+						}
+					}
+				},
+				{
+					"name": "Get Fuel Logs — Filter by Vehicle",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs?vehicleId={{vehicle_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs"],
+							"query": [
+								{ "key": "vehicleId", "value": "{{vehicle_1_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Fuel Logs — Filter by Trip",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs?tripId={{trip_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs"],
+							"query": [
+								{ "key": "tripId", "value": "{{trip_1_id}}" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Fuel Log by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs/{{fuel_log_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs", "{{fuel_log_1_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Fuel Log",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/fuel-logs/{{fuel_log_1_id}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "fuel-logs", "{{fuel_log_1_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"description": "Dashboard overview — All authenticated roles",
+			"item": [
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "dashboard"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"description": "Analytics & reporting — Write (generate): FINANCIAL_ANALYST | Read: FINANCIAL_ANALYST, FLEET_MANAGER",
+			"item": [
+				{
+					"name": "Get Financial Summaries (All)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/financial-summaries",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "financial-summaries"]
+						}
+					}
+				},
+				{
+					"name": "Get Financial Summaries — Filter by Year",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/financial-summaries?year=2025",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "financial-summaries"],
+							"query": [
+								{ "key": "year", "value": "2025" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Vehicle Costs Breakdown",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/vehicle-costs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "vehicle-costs"]
+						}
+					}
+				},
+				{
+					"name": "Get Top Costliest Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/top-costliest-vehicles?limit=3",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "top-costliest-vehicles"],
+							"query": [
+								{ "key": "limit", "value": "3" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Fleet Summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/fleet-summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "fleet-summary"]
+						}
+					}
+				},
+				{
+					"name": "Generate Monthly Summary (Specific Month)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/generate-summary?year=2025&month=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "generate-summary"],
+							"query": [
+								{ "key": "year", "value": "2025" },
+								{ "key": "month", "value": "1" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Generate Current Month Summary",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/analytics/generate-current-summary",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "analytics", "generate-current-summary"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "RBAC Tests — Access Denied",
+			"description": "Negative tests — verify that wrong roles get 403 Forbidden",
+			"item": [
+				{
+					"name": "Dispatcher tries to Create Vehicle (should 403)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"// First login as Dispatcher",
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('baseUrl') + '/api/auth/login',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: { mode: 'raw', raw: JSON.stringify({ email: 'amit.patel@fleetflow.com', password: 'Password@123' }) }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('jwt_token', res.json().token);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Should return 403 Forbidden', function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"licensePlate\": \"XX-00-XX-0000\",\n  \"type\": \"TRUCK\",\n  \"maxLoadCapacity\": 5000.0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				},
+				{
+					"name": "Fleet Manager tries to Create Trip (should 403)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('baseUrl') + '/api/auth/login',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: { mode: 'raw', raw: JSON.stringify({ email: 'rajesh.kumar@fleetflow.com', password: 'Password@123' }) }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('jwt_token', res.json().token);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Should return 403 Forbidden', function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{vehicle_1_id}}\",\n  \"driverId\": \"{{driver_1_id}}\",\n  \"cargoWeight\": 1000.0,\n  \"origin\": \"Mumbai\",\n  \"destination\": \"Delhi\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/trips",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "trips"]
+						}
+					}
+				},
+				{
+					"name": "Dispatcher tries to Create Driver (should 403)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('baseUrl') + '/api/auth/login',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: { mode: 'raw', raw: JSON.stringify({ email: 'amit.patel@fleetflow.com', password: 'Password@123' }) }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('jwt_token', res.json().token);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Should return 403 Forbidden', function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Fake Driver\",\n  \"licenseNumber\": \"FAKE-001\",\n  \"licenseExpiryDate\": \"2028-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/drivers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "drivers"]
+						}
+					}
+				},
+				{
+					"name": "Safety Officer tries to Create Expense (should 403)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.collectionVariables.get('baseUrl') + '/api/auth/login',",
+									"    method: 'POST',",
+									"    header: { 'Content-Type': 'application/json' },",
+									"    body: { mode: 'raw', raw: JSON.stringify({ email: 'vikram.singh@fleetflow.com', password: 'Password@123' }) }",
+									"}, function (err, res) {",
+									"    pm.collectionVariables.set('jwt_token', res.json().token);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Should return 403 Forbidden', function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tripId\": \"{{trip_1_id}}\",\n  \"fuelCost\": 5000.00\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"]
+						}
+					}
+				},
+				{
+					"name": "No Auth — Access Protected Endpoint (should 401)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Should return 401 Unauthorized', function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/vehicles",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "vehicles"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
