@@ -287,4 +287,4 @@ mysql -u YOUR_USERNAME -p Fleet_Flow_DB < Backend/src/main/resources/mock_data.s
 
 **Mission ImCodeable**
 
-Built with ❤️ for the Odoo Combat Hackathon.
+Built with ❤️ for the Odoo Hackathon.
