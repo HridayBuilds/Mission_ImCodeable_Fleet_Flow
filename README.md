@@ -2,7 +2,7 @@
 
 **Fleet Flow** — A modular fleet and logistics management system that replaces manual logbooks with a centralized, rule-based digital hub for optimizing delivery fleet operations, driver safety, and financial performance.
 
-Built for the **Odoo Combat Hackathon**.
+Built for the **Odoo Hackathon**.
 
 ---
 
