@@ -2,13 +2,15 @@
 
 **Fleet Flow** — A modular fleet and logistics management system that replaces manual logbooks with a centralized, rule-based digital hub for optimizing delivery fleet operations, driver safety, and financial performance.
 
-Built for the **Odoo Hackathon**.
+Built for the **Odoo x Gujarat Vidyapith Hackathon '26**.
 
 ---
 
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Database Schema](#database-schema)
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
@@ -18,6 +20,7 @@ Built for the **Odoo Hackathon**.
 - [Mock Data](#mock-data)
 - [API Documentation](#api-documentation)
 - [Roles & Permissions](#roles--permissions)
+- [Application Gallery](#-application-gallery)
 
 ---
 
@@ -31,6 +34,114 @@ Fleet Flow provides end-to-end fleet lifecycle management across four distinct u
 - **Financial Analyst** — Expense auditing, fuel logging, operational analytics
 
 Every action is enforced with strict **Role-Based Access Control (RBAC)** at both the backend (URL-level + method-level security) and frontend (route guards + UI permission checks).
+
+---
+
+## Database Schema
+
+Fleet Flow uses a normalized relational schema with **10 tables**, UUID primary keys, and enforced foreign-key relationships across all modules.
+
+<p align="center">
+  <img src="images/00-db-schema.png" alt="Fleet Flow — Database Schema (MySQL Workbench)" width="700" />
+</p>
+<p align="center"><em>Entity-Relationship diagram — MySQL Workbench</em></p>
+
+### Tables & Relationships
+
+```
+users
+ ├──< drivers.created_by              (1 : N)
+ ├──< vehicles.created_by             (1 : N)
+ ├──< trips.dispatched_by             (1 : N)
+ ├──< expenses.created_by             (1 : N)
+ ├──< fuel_logs.recorded_by           (1 : N)
+ ├──< maintenance_logs.created_by     (1 : N)
+ ├──< password_reset_tokens.user_id   (1 : N)
+ └──— verification_tokens.user_id     (1 : 1)
+
+vehicles
+ ├──< trips.vehicle_id                (1 : N)
+ ├──< expenses.vehicle_id             (1 : N)
+ ├──< fuel_logs.vehicle_id            (1 : N)
+ └──< maintenance_logs.vehicle_id     (1 : N)
+
+drivers
+ ├──< trips.driver_id                 (1 : N)
+ └──< expenses.driver_id              (1 : N)
+
+trips
+ ├──< expenses.trip_id                (1 : N)
+ └──< fuel_logs.trip_id               (1 : N, optional)
+
+monthly_financial_summaries           (standalone aggregate)
+```
+
+### Key Schema Highlights
+
+| Table | Key Columns | Business Rules |
+|-------|-------------|----------------|
+| **users** | `email` (unique), `employee_id` (unique), `role` (enum) | JWT auth, email verification, 4 roles |
+| **vehicles** | `license_plate` (unique), `type` (enum), `max_load_capacity` | Status: Available → On Trip → In Shop → Retired |
+| **drivers** | `license_number` (unique), `safety_score`, `completion_rate` | License expiry blocking, status management |
+| **trips** | `trip_number` (unique), `cargo_weight`, `revenue` | Cargo validation against vehicle capacity |
+| **expenses** | `fuel_cost`, `misc_expense`, `total_cost` (auto-computed) | `total_cost = fuel_cost + misc_expense` via `@PrePersist` |
+| **fuel_logs** | `liters`, `cost`, `odometer_at_fill` | Per-vehicle fuel tracking, optional trip link |
+| **maintenance_logs** | `service_name`, `cost`, `status` | Auto sets vehicle → "In Shop" on creation |
+| **monthly_financial_summaries** | `revenue`, `fuel_cost`, `maintenance_cost`, `net_profit` | `net_profit` auto-computed, unique `(year, month)` |
+
+> All IDs are `UUID`. All timestamps use Hibernate's `@CreationTimestamp` / `@UpdateTimestamp`. All enums stored as `STRING`.
+
+---
+
+## Screenshots
+
+### Authentication
+
+| Login | Register |
+|:---:|:---:|
+| ![Login Page](images/11-login.png) | ![Register Page](images/17-register.png) |
+
+| Email Verification | Welcome Email |
+|:---:|:---:|
+| ![Email Verification](images/15-email-verification.png) | ![Welcome Email](images/16-welcome-email.png) |
+
+### Command Center (Dashboard)
+
+> Role-aware KPIs — active fleet count, vehicles in shop, utilization rate, pending cargo, and recent trips.
+
+![Dashboard](images/01-dashboard.png)
+
+### Vehicle Management — Full CRUD
+
+> **Fleet Manager** role — create, read, update, and delete vehicles with license plate enforcement, load capacity, and status management.
+
+| Vehicle Registry | Edit Vehicle | Add Vehicle |
+|:---:|:---:|:---:|
+| ![Vehicles List](images/02-vehicles-list.png) | ![Edit Vehicle](images/03-vehicle-edit.png) | ![Add Vehicle](images/04-vehicle-add.png) |
+
+### Trip Dispatcher — Full CRUD
+
+> **Dispatcher** role — create trips with automatic cargo weight validation, sorting, filtering, and status lifecycle management.
+
+| Trip List with Filters | Trip Sorting & Search | Create Trip (Cargo Validation) |
+|:---:|:---:|:---:|
+| ![Trips Filters](images/08-dispatcher-trips-filters.png) | ![Trips List](images/09-dispatcher-trips-list.png) | ![Create Trip](images/10-dispatcher-create-trip.png) |
+
+### Driver Management — Full CRUD
+
+> **Safety Officer** role — add drivers, manage statuses, track license expiry, safety scores, and complaints.
+
+| Driver List & Status | Add Driver | Driver Overview |
+|:---:|:---:|:---:|
+| ![Driver Status](images/12-safety-officer-driver-status.png) | ![Add Driver](images/13-safety-officer-add-driver.png) | ![Drivers](images/14-safety-officer-drivers.png) |
+
+### Financial Analyst Views
+
+> **Financial Analyst** role — expense auditing, fuel logging, analytics dashboards, and operational insights.
+
+| Analytics & Reports | Cost Breakdown |
+|:---:|:---:|
+| ![Financial View 1](images/05-financial-analyst-view-1.png) | ![Financial View 2](images/06-financial-analyst-view-2.png) |
 
 ---
 
@@ -283,8 +394,46 @@ mysql -u YOUR_USERNAME -p Fleet_Flow_DB < Backend/src/main/resources/mock_data.s
 
 ---
 
+## 🖼 Application Gallery
+
+A closer look at the remaining screens in Fleet Flow.
+
+<details>
+<summary><strong>User Profile</strong></summary>
+<br>
+
+> View and manage personal details, role information, and account settings.
+
+![User Profile](images/07-profile.png)
+
+</details>
+
+<details>
+<summary><strong>Email Verification Flow</strong></summary>
+<br>
+
+> Branded HTML emails are sent on signup. Users must verify their email before accessing the platform.
+
+| Verification Link | Welcome Confirmation |
+|:---:|:---:|
+| ![Email Verification](images/15-email-verification.png) | ![Welcome Email](images/16-welcome-email.png) |
+
+</details>
+
+<details>
+<summary><strong>Database Schema (MySQL Workbench)</strong></summary>
+<br>
+
+> Full ER diagram showing all 10 tables, relationships, and constraints.
+
+![DB Schema](images/00-db-schema.png)
+
+</details>
+
+---
+
 ## Team
 
 **Mission ImCodeable**
 
-Built with ❤️ for the Odoo Hackathon.
+Built for the Odoo x Gujarat Vidyapith Hackathon '26.

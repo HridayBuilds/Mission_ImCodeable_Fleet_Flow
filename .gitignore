@@ -47,3 +47,7 @@ Backend/.env
 
 # PDF
 *.pdf
+
+# Non-essential folders
+MISC/
+VIDEO/
