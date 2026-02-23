@@ -398,7 +398,7 @@ mysql -u YOUR_USERNAME -p Fleet_Flow_DB < Backend/src/main/resources/mock_data.s
 
 A closer look at the remaining screens in Fleet Flow.
 
-<details>
+<details open>
 <summary><strong>User Profile</strong></summary>
 <br>
 
@@ -408,7 +408,7 @@ A closer look at the remaining screens in Fleet Flow.
 
 </details>
 
-<details>
+<details open>
 <summary><strong>Email Verification Flow</strong></summary>
 <br>
 
@@ -420,7 +420,7 @@ A closer look at the remaining screens in Fleet Flow.
 
 </details>
 
-<details>
+<details open>
 <summary><strong>Database Schema (MySQL Workbench)</strong></summary>
 <br>
 
@@ -435,5 +435,12 @@ A closer look at the remaining screens in Fleet Flow.
 ## Team
 
 **Mission ImCodeable**
+
+| Name | Role |
+|------|------|
+| **Hriday Mulchandani** | Team Leader |
+| **Tanish Jha** | Member |
+| **Vraj Priyadarshi** | Member |
+| **Jil Patel** | Member |
 
 Built for the Odoo x Gujarat Vidyapith Hackathon '26.
